@@ -52,32 +52,32 @@
             font-size: 3.5rem;
             color: #ffffff;
             font-weight: 300;
-            margin-bottom: 2rem;
-            letter-spacing: 4px;
-            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            margin-bottom: 2.2rem;
+            letter-spacing: 6px;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
         }
 
         /* --- 搜索组件容器 --- */
         .search-box-container {
             position: relative;
             width: 100%;
-            max-width: 650px;
+            max-width: 680px;
             display: flex;
             align-items: center;
             /* 极简毛玻璃特效 */
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            border-radius: 30px;
-            padding: 6px 12px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 32px;
+            padding: 6px 10px 6px 14px;
+            box-shadow: 0 10px 32px rgba(0, 0, 0, 0.3);
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
         .search-box-container:focus-within {
-            background: rgba(255, 255, 255, 0.18);
-            border-color: rgba(255, 255, 255, 0.45);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
             transform: translateY(-2px);
         }
 
@@ -86,12 +86,13 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            padding: 8px 14px;
+            padding: 8px 12px;
             cursor: pointer;
             color: #fff;
             font-size: 0.95rem;
             border-radius: 20px;
             transition: background 0.2s;
+            flex-shrink: 0;
         }
         .engine-selector:hover {
             background: rgba(255, 255, 255, 0.15);
@@ -112,32 +113,44 @@
             padding: 10px 12px;
             color: #fff;
             font-size: 1.1rem;
+            width: 100%;
         }
         .search-input::placeholder {
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 0.5);
         }
 
-        /* --- 一键清空按钮 --- */
-        .clear-btn {
-            width: 30px;
-            height: 30px;
+        /* --- 右侧功能按钮通用样式 --- */
+        .action-btn {
+            width: 36px;
+            height: 36px;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
             border-radius: 50%;
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 0.65);
             transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        /* --- 一键清空按钮特有样式 --- */
+        .clear-btn {
             opacity: 0;
             pointer-events: none;
+            margin-right: 2px;
         }
         .clear-btn.show {
             opacity: 1;
             pointer-events: auto;
         }
-        .clear-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            color: #fff;
+
+        /* --- 搜索按钮特有样式 --- */
+        .search-btn {
+            color: rgba(255, 255, 255, 0.85);
         }
 
         /* --- 弹出的搜索引擎面板 --- */
@@ -146,16 +159,16 @@
             top: calc(100% + 12px);
             left: 0;
             width: 100%;
-            background: rgba(20, 20, 20, 0.65);
+            background: rgba(15, 15, 15, 0.7);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 18px;
-            padding: 16px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            padding: 18px;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.6);
             display: none;
             flex-direction: column;
-            gap: 14px;
+            gap: 16px;
             z-index: 100;
         }
         .engine-dropdown.show {
@@ -167,29 +180,29 @@
         .category-row {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 8px;
         }
         .category-title {
             font-size: 0.75rem;
             color: rgba(255, 255, 255, 0.4);
             text-transform: uppercase;
-            letter-spacing: 1px;
-            padding-left: 6px;
+            letter-spacing: 1.5px;
+            padding-left: 4px;
         }
         .engine-list {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 10px;
         }
         .engine-item {
             display: flex;
             align-items: center;
             gap: 6px;
-            padding: 6px 12px;
+            padding: 6px 14px;
             background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.04);
             color: rgba(255, 255, 255, 0.85);
-            border-radius: 12px;
+            border-radius: 14px;
             font-size: 0.9rem;
             cursor: pointer;
             transition: all 0.2s;
@@ -197,7 +210,7 @@
         .engine-item:hover {
             background: rgba(255, 255, 255, 0.2);
             color: #fff;
-            border-color: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.15);
         }
 
         /* 动画效果 */
@@ -223,8 +236,12 @@
 
             <input type="text" class="search-input" id="search-input" placeholder="输入搜索内容..." autocomplete="off">
 
-            <div class="clear-btn" id="clear-btn">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            <div class="action-btn clear-btn" id="clear-btn" title="清空内容">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </div>
+
+            <div class="action-btn search-btn" id="search-btn" title="点击搜索">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
             </div>
 
             <div class="engine-dropdown" id="engine-dropdown"></div>
@@ -233,46 +250,45 @@
 
     <script>
         // ==========================================
-        //  核心可自定义配置项 (按需随心修改)
+        //  核心可自定义配置项
         // ==========================================
         const CONFIG = {
             title: "SPACE", // 主页居中大标题
             background: {
-                type: "video", // 两种可选: "video" (动态视频) 或 "image" (静态图片)
-                url: "https://vjs.zencdn.net/v/oceans.mp4" // 你的 Worker 加速视频链接，或者图片链接/本地相对路径
+                type: "image", // 已切换为静态图片模式
+                url: "https://images.wallpaperscraft.com/image/single/photographer_camera_dark_133781_1280x720.jpg" // 你指定的暗色静谧背景
             },
-            // 搜索引擎分类与具体项
+            // 默认采用高稳定性的 Yandex 接口自动抓取图标，如需隐藏，将 icon 设为 "" 即可
             categories: [
                 {
                     name: "常用搜索",
                     engines: [
-                        { name: "百度", url: "https://www.baidu.com/s?wd=", icon: "" }, // icon留空时自动只展示文字
-                        { name: "谷歌", url: "https://www.google.com/search?q=", icon: "https://www.google.com/favicon.ico" }
+                        { name: "百度", url: "https://www.baidu.com/s?wd=", icon: "https://favicon.yandex.net/favicon/baidu.com" },
+                        { name: "谷歌", url: "https://www.google.com/search?q=", icon: "https://favicon.yandex.net/favicon/google.com" }
                     ]
                 },
                 {
                     name: "影音视界",
                     engines: [
-                        { name: "哔哩哔哩", url: "https://search.bilibili.com/all?keyword=", icon: "https://www.bilibili.com/favicon.ico" },
-                        { name: "抖音", url: "https://www.douyin.com/search/", icon: "" }
+                        { name: "哔哩哔哩", url: "https://search.bilibili.com/all?keyword=", icon: "https://favicon.yandex.net/favicon/bilibili.com" },
+                        { name: "抖音", url: "https://www.douyin.com/search?keyword=", icon: "" } // 留空则纯文字展示
                     ]
                 },
                 {
                     name: "生活购物",
                     engines: [
                         { name: "淘宝", url: "https://s.taobao.com/search?q=", icon: "" },
-                        { name: "京东", url: "https://search.jd.com/Search?keyword=", icon: "https://www.jd.com/favicon.ico" }
+                        { name: "京东", url: "https://search.jd.com/Search?keyword=", icon: "https://favicon.yandex.net/favicon/jd.com" }
                     ]
                 }
             ]
         };
 
         // ==========================================
-        //  业务逻辑核心控制 (无需修改)
+        //  业务逻辑核心控制
         // ==========================================
-        let currentEngine = CONFIG.categories[0].engines[0]; // 默认取第一个引擎（百度）
+        let currentEngine = CONFIG.categories[0].engines[0]; 
 
-        // 初始化页面基础组件
         function initPage() {
             // 1. 设置标题
             document.getElementById('site-title').innerText = CONFIG.title;
@@ -303,11 +319,9 @@
                     const item = document.createElement('div');
                     item.className = 'engine-item';
                     
-                    // 判断是否提供自定义图标
                     const iconHtml = eng.icon ? `<img src="${eng.icon}" class="engine-icon" onerror="this.style.display='none'">` : '';
                     item.innerHTML = `${iconHtml}<span>${eng.name}</span>`;
                     
-                    // 点击切换引擎事件
                     item.addEventListener('click', (e) => {
                         e.stopPropagation();
                         updateCurrentEngine(eng);
@@ -321,11 +335,10 @@
                 dropdown.appendChild(row);
             });
 
-            // 4. 初始化默认引擎显示
+            // 4. 初始化默认引擎
             updateCurrentEngine(currentEngine);
         }
 
-        // 更新当前选中的搜索引擎状态
         function updateCurrentEngine(engine) {
             currentEngine = engine;
             document.getElementById('current-engine-name').innerText = engine.name;
@@ -334,19 +347,28 @@
             if (engine.icon) {
                 iconSlot.innerHTML = `<img src="${engine.icon}" class="engine-icon" onerror="this.style.display='none'">`;
             } else {
-                iconSlot.innerHTML = ''; // 没自定义则置空
+                iconSlot.innerHTML = ''; 
+            }
+        }
+
+        // 执行搜索跳转
+        function triggerSearch() {
+            const query = searchInput.value.trim();
+            if (query) {
+                window.open(currentEngine.url + encodeURIComponent(query), '_blank');
             }
         }
 
         // ==========================================
-        //  事件监听与交互行为
+        //  事件监听
         // ==========================================
         const searchInput = document.getElementById('search-input');
         const clearBtn = document.getElementById('clear-btn');
+        const searchBtn = document.getElementById('search-btn');
         const engineSelector = document.getElementById('engine-selector');
         const dropdown = document.getElementById('engine-dropdown');
 
-        // 监听输入框内容变化控制“清空”按钮
+        // 输入监听控制清空按钮显隐
         searchInput.addEventListener('input', () => {
             if (searchInput.value.trim().length > 0) {
                 clearBtn.classList.add('show');
@@ -355,35 +377,37 @@
             }
         });
 
-        // 一键清空事件
-        clearBtn.addEventListener('click', () => {
+        // 清空事件
+        clearBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
             searchInput.value = '';
             clearBtn.classList.remove('show');
             searchInput.focus();
         });
 
-        // 点击引擎选择器弹出/隐藏面板
+        // 搜索按钮点击事件
+        searchBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            triggerSearch();
+        });
+
+        // 回车键事件
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                triggerSearch();
+            }
+        });
+
+        // 面板切换
         engineSelector.addEventListener('click', (e) => {
             e.stopPropagation();
             dropdown.classList.toggle('show');
         });
 
-        // 点击页面其他地方关闭面板
         document.addEventListener('click', () => {
             dropdown.classList.remove('show');
         });
 
-        // 回车执行搜索
-        searchInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                const query = searchInput.value.trim();
-                if (query) {
-                    window.open(currentEngine.url + encodeURIComponent(query), '_blank');
-                }
-            }
-        });
-
-        // 页面加载启动
         window.addEventListener('DOMContentLoaded', initPage);
     </script>
 </body>
