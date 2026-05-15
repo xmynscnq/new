@@ -20,19 +20,23 @@
             background-color: #000;
         }
 
-        /* --- 背景层设计（修复高度塌陷问题） --- */
+        /* --- 背景层设计（强制绝对定位撑满） --- */
         #background-container {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
             z-index: -1;
-            background-position: center;
-            background-size: cover;
-            background-repeat: no-repeat;
+            overflow: hidden;
+            background-color: #000;
         }
+        
+        /* 强制图片或视频完美裁剪铺满，绝不留白，绝不塌陷 */
         .bg-media {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -123,7 +127,7 @@
             color: rgba(255, 255, 255, 0.5);
         }
 
-        /* --- 右侧功能按钮通用样式 --- */
+        /* --- 功能按钮 --- */
         .action-btn {
             width: 36px;
             height: 36px;
@@ -141,7 +145,6 @@
             color: #fff;
         }
 
-        /* --- 一键清空按钮特有样式 --- */
         .clear-btn {
             opacity: 0;
             pointer-events: none;
@@ -152,12 +155,11 @@
             pointer-events: auto;
         }
 
-        /* --- 搜索按钮特有样式 --- */
         .search-btn {
             color: rgba(255, 255, 255, 0.85);
         }
 
-        /* --- 弹出的搜索引擎面板 --- */
+        /* --- 搜索引擎下拉面板 --- */
         .engine-dropdown {
             position: absolute;
             top: calc(100% + 12px);
@@ -180,7 +182,6 @@
             animation: fadeIn 0.2s ease-out;
         }
 
-        /* 分类行 */
         .category-row {
             display: flex;
             flex-direction: column;
@@ -217,7 +218,6 @@
             border-color: rgba(255, 255, 255, 0.15);
         }
 
-        /* 动画效果 */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -257,10 +257,11 @@
         //  核心可自定义配置项
         // ==========================================
         const CONFIG = {
-            title: "SPACE", // 主页居中大标题
+            title: "SPACE", 
             background: {
                 type: "image", // 支持 "image" 或 "video"
-                url: "https://images.wallpaperscraft.com/image/single/photographer_camera_dark_133781_1280x720.jpg" // 确保你的图片文件名和仓库里完全一致
+                // 采用标准字符串注入，无论是外链还是本地路径都能完美识别
+                url: "https://images.wallpaperscraft.com/image/single/photographer_camera_dark_133781_1280x720.jpg" 
             },
             categories: [
                 {
@@ -293,20 +294,16 @@
         let currentEngine = CONFIG.categories[0].engines[0]; 
 
         function initPage() {
-            // 1. 设置标题
             document.getElementById('site-title').innerText = CONFIG.title;
 
-            // 2. 修复后的背景渲染逻辑
+            // 用纯粹的 DOM 节点插入代替容易出错的 CSS 样式注入，彻底根治路径识别 Bug
             const bgContainer = document.getElementById('background-container');
             if (CONFIG.background.type === 'video') {
-                bgContainer.style.backgroundImage = 'none';
                 bgContainer.innerHTML = `<video class="bg-media" autoplay loop muted playsinline src="${CONFIG.background.url}"></video>`;
             } else {
-                bgContainer.innerHTML = ''; // 清空可能存在的视频
-                bgContainer.style.backgroundImage = `url('${CONFIG.background.url}')`;
+                bgContainer.innerHTML = `<img class="bg-media" src="${CONFIG.background.url}">`;
             }
 
-            // 3. 动态渲染引擎分类面板
             const dropdown = document.getElementById('engine-dropdown');
             CONFIG.categories.forEach(cat => {
                 const row = document.createElement('div');
@@ -340,7 +337,6 @@
                 dropdown.appendChild(row);
             });
 
-            // 4. 初始化默认引擎
             updateCurrentEngine(currentEngine);
         }
 
