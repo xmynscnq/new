@@ -32,7 +32,6 @@
             background-color: #000;
         }
         
-        /* 强制图片或视频完美裁剪铺满，绝不留白，绝不塌陷 */
         .bg-media {
             position: absolute;
             top: 0;
@@ -72,7 +71,6 @@
             max-width: 680px;
             display: flex;
             align-items: center;
-            /* 极简毛玻璃特效 */
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(18px);
             -webkit-backdrop-filter: blur(18px);
@@ -260,8 +258,8 @@
             title: "SPACE", 
             background: {
                 type: "image", // 支持 "image" 或 "video"
-                // 采用标准字符串注入，无论是外链还是本地路径都能完美识别
-                url: "https://images.wallpaperscraft.com/image/single/photographer_camera_dark_133781_1280x720.jpg" 
+                url: "https://images.wallpaperscraft.com/image/single/photographer_camera_dark_133781_1280x720.jpg",
+                fallbackUrl: "image.png" // 💡 核心防御：当外链被浏览器安全策略拦截时，自动无缝降级加载同级目录下的本地图
             },
             categories: [
                 {
@@ -296,12 +294,24 @@
         function initPage() {
             document.getElementById('site-title').innerText = CONFIG.title;
 
-            // 用纯粹的 DOM 节点插入代替容易出错的 CSS 样式注入，彻底根治路径识别 Bug
             const bgContainer = document.getElementById('background-container');
             if (CONFIG.background.type === 'video') {
                 bgContainer.innerHTML = `<video class="bg-media" autoplay loop muted playsinline src="${CONFIG.background.url}"></video>`;
             } else {
-                bgContainer.innerHTML = `<img class="bg-media" src="${CONFIG.background.url}">`;
+                // 创建图片元素，并挂载双重防御事件
+                const img = document.createElement('img');
+                img.className = 'bg-media';
+                img.src = CONFIG.background.url;
+                
+                // 如果外链因跨域、混合内容、或证书问题加载失败，立刻换成本地图
+                img.onerror = function() {
+                    console.warn("外链背景加载受阻，已启用本地备份图：" + CONFIG.background.fallbackUrl);
+                    this.src = CONFIG.background.fallbackUrl;
+                    this.onerror = null; // 防止本地图也不存在时陷入死循环
+                };
+                
+                bgContainer.innerHTML = '';
+                bgContainer.appendChild(img);
             }
 
             const dropdown = document.getElementById('engine-dropdown');
