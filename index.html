@@ -20,7 +20,7 @@
             background-color: #000;
         }
 
-        /* --- 背景层设计（全面通透） --- */
+        /* --- 背景层设计（修复高度塌陷问题） --- */
         #background-container {
             position: fixed;
             top: 0;
@@ -28,12 +28,16 @@
             width: 100%;
             height: 100%;
             z-index: -1;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
         }
         .bg-media {
             width: 100%;
             height: 100%;
             object-fit: cover;
             pointer-events: none;
+            display: block;
         }
 
         /* --- 主体布局 --- */
@@ -255,10 +259,9 @@
         const CONFIG = {
             title: "SPACE", // 主页居中大标题
             background: {
-                type: "image", // 已切换为静态图片模式
-                url: "image.png" // 你指定的暗色静谧背景
+                type: "image", // 支持 "image" 或 "video"
+                url: "https://images.wallpaperscraft.com/image/single/photographer_camera_dark_133781_1280x720.jpg" // 确保你的图片文件名和仓库里完全一致
             },
-            // 默认采用高稳定性的 Yandex 接口自动抓取图标，如需隐藏，将 icon 设为 "" 即可
             categories: [
                 {
                     name: "常用搜索",
@@ -271,7 +274,7 @@
                     name: "影音视界",
                     engines: [
                         { name: "哔哩哔哩", url: "https://search.bilibili.com/all?keyword=", icon: "https://favicon.yandex.net/favicon/bilibili.com" },
-                        { name: "抖音", url: "https://www.douyin.com/search?keyword=", icon: "" } // 留空则纯文字展示
+                        { name: "抖音", url: "https://www.douyin.com/search?keyword=", icon: "" } 
                     ]
                 },
                 {
@@ -293,12 +296,14 @@
             // 1. 设置标题
             document.getElementById('site-title').innerText = CONFIG.title;
 
-            // 2. 渲染背景
+            // 2. 修复后的背景渲染逻辑
             const bgContainer = document.getElementById('background-container');
             if (CONFIG.background.type === 'video') {
+                bgContainer.style.backgroundImage = 'none';
                 bgContainer.innerHTML = `<video class="bg-media" autoplay loop muted playsinline src="${CONFIG.background.url}"></video>`;
             } else {
-                bgContainer.innerHTML = `<div class="bg-media" style="background: url('${CONFIG.background.url}') no-repeat center center/cover;"></div>`;
+                bgContainer.innerHTML = ''; // 清空可能存在的视频
+                bgContainer.style.backgroundImage = `url('${CONFIG.background.url}')`;
             }
 
             // 3. 动态渲染引擎分类面板
@@ -351,7 +356,6 @@
             }
         }
 
-        // 执行搜索跳转
         function triggerSearch() {
             const query = searchInput.value.trim();
             if (query) {
@@ -368,7 +372,6 @@
         const engineSelector = document.getElementById('engine-selector');
         const dropdown = document.getElementById('engine-dropdown');
 
-        // 输入监听控制清空按钮显隐
         searchInput.addEventListener('input', () => {
             if (searchInput.value.trim().length > 0) {
                 clearBtn.classList.add('show');
@@ -377,7 +380,6 @@
             }
         });
 
-        // 清空事件
         clearBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             searchInput.value = '';
@@ -385,20 +387,17 @@
             searchInput.focus();
         });
 
-        // 搜索按钮点击事件
         searchBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             triggerSearch();
         });
 
-        // 回车键事件
         searchInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
                 triggerSearch();
             }
         });
 
-        // 面板切换
         engineSelector.addEventListener('click', (e) => {
             e.stopPropagation();
             dropdown.classList.toggle('show');
