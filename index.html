@@ -472,10 +472,10 @@ const CONFIG = {
 
     background: {
 
-        type: "image",
+        type: "video",
 
         // 本地图片
-        url: "image.png"
+        url: "https://pan.baidu.re/view.php/6f089bcada7094fee781e66b60423f2c.webm"
 
         // 视频背景示例：
         // type:"video",
@@ -485,7 +485,7 @@ const CONFIG = {
     categories: [
 
         {
-            name: "常用搜索",
+            name: "",
 
             engines: [
 
@@ -499,50 +499,24 @@ const CONFIG = {
                     name:"谷歌",
                     url:"https://www.google.com/search?q=",
                     icon:"https://favicon.yandex.net/favicon/google.com"
-                }
-
-            ]
-        },
-
-        {
-            name: "影音视界",
-
-            engines: [
-
+                },
+                {
+                    name:"GitHub",
+                    url:"https://github.com/search?q=",
+                    icon:"https://favicon.yandex.net/favicon/github.com"
+                },
                 {
                     name:"哔哩哔哩",
                     url:"https://search.bilibili.com/all?keyword=",
                     icon:"https://favicon.yandex.net/favicon/bilibili.com"
                 },
-
                 {
-                    name:"抖音",
-                    url:"https://www.douyin.com/search?keyword=",
-                    icon:""
-                }
-
+                    name:"QQ音乐",
+                    url:"https://y.qq.com/n/ryqq/search?w=",
+                    icon:"https://favicon.yandex.net/favicon/y.qq.com"
+               }
             ]
         },
-
-        {
-            name: "生活购物",
-
-            engines: [
-
-                {
-                    name:"淘宝",
-                    url:"https://s.taobao.com/search?q=",
-                    icon:""
-                },
-
-                {
-                    name:"京东",
-                    url:"https://search.jd.com/Search?keyword=",
-                    icon:"https://favicon.yandex.net/favicon/jd.com"
-                }
-
-            ]
-        }
 
     ]
 
